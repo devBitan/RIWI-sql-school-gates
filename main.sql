@@ -1,57 +1,52 @@
--- JUAN ESTEBAN QUIRAMA LOPEZ - EJERCICIO SQL school-gates
-
--- CREATE database gates_school;
-
--- use gates_school;
-
+-- show tables;
 -- CREATE TABLE `SUBJECTS` (
---   `subject_id` int AUTO_INCREMENT,
+--   `subject_id` int AUTO_INCREMENT UNIQUE,
 --   `subject_name` varchar(255),
 --   `teacher_id` int,
 --   PRIMARY KEY (`subject_id`)
 -- );
 
 -- CREATE TABLE `PLACES` (
---   `floor_id` int AUTO_INCREMENT,
+--   `floor_id` int AUTO_INCREMENT UNIQUE,
 --   `place_name` varchar(255),
 --   `course_id` int,
 --   PRIMARY KEY (`floor_id`)
 -- );
 
 -- CREATE TABLE `STUDENTS` (
---   `student_id` int AUTO_INCREMENT,
+--   `student_id` int AUTO_INCREMENT UNIQUE,
 --   `student_name` varchar(255),
 --   `student_last_name` varchar(255),
 --   `student_document` varchar(255),
 --   `student_email` varchar(255),
 --   `student_phone` varchar(255),
 --   `student_active` varchar(255),
---   `create_at` timestamp ,
+--   `create_at` date,
 --   `course_id` int,
 --   PRIMARY KEY (`student_id`)
 -- );
 
 -- CREATE TABLE `TEACHERS` (
---   `teacher_id` int AUTO_INCREMENT,
+--   `teacher_id` int AUTO_INCREMENT UNIQUE,
 --   `teacher_name` varchar(255),
 --   `teacher_last_name` varchar(255),
 --   `teacher_document` varchar(255),
 --   `teacher_email` varchar(255),
 --   `teacher_phone` varchar(255),
 --   `teacher_active` varchar(255),
---   `create_at` timestamp,
+--   `create_at` date,
 --   PRIMARY KEY (`teacher_id`)
 -- );
 
 -- CREATE TABLE `COURSES` (
---   `course_id` int AUTO_INCREMENT,
+--   `course_id` int AUTO_INCREMENT UNIQUE,
 --   `course_name` varchar(255),
 --   `teacher_id` int,
 --   PRIMARY KEY (`course_id`)
 -- );
 
 -- CREATE TABLE `COURSES_SUBJECTS` (
---   `id` int AUTO_INCREMENT,
+--   `id` int AUTO_INCREMENT UNIQUE,
 --   `course_id` int,
 --   `subject_id` int,
 --   PRIMARY KEY (`id`),
@@ -60,12 +55,104 @@
 -- );
 
 -- CREATE TABLE `COURSES_TEACHERS` (
---   `id` int AUTO_INCREMENT,
+--   `id` int AUTO_INCREMENT UNIQUE,
 --   `course_id` int,
 --   `teacher_id` int,
 --   PRIMARY KEY (`id`),
 --   FOREIGN KEY (`teacher_id`) REFERENCES `TEACHERS`(`teacher_id`),
 --   FOREIGN KEY (`course_id`) REFERENCES `COURSES`(`course_id`)
 -- );
+-- select * from STUDENTS;
+-- INSERT INTO STUDENTS (student_name, student_last_name, student_document, student_email, student_phone, student_active,course_id) 
+-- VALUES 
+-- 	('luis', 'manila', '1036670093', 'luis@.com', '3059039', 'active', '1'),
+-- 	('juan', 'quirama', '1036670093', 'jquirama@.com', '3059039', 'active', '2'),
+--     ('felipe', 'zapata', '1036670093', 'felipe@.com', '3059039', 'active', '2'),
+--     ('esteban', 'lopez', '1036670093', 'esteban@.com', '3059039', 'active', '3'),
+--     ('alejo', 'solis', '1036670093', 'alejo@.com', '3059039', 'active', '1');
 
--- https://lucid.app/lucidchart/42811e5e-3cce-4843-aae9-8f25c18355d2/edit?beaconFlowId=3DFE364F72EE01C7&page=0_0&invitationId=inv_c3bdf63f-d237-4e24-9214-386897cdc40b#
+-- select * from TEACHERS;
+-- INSERT INTO TEACHERS (teacher_name, teacher_last_name, teacher_document, teacher_email, teacher_phone, teacher_active)
+-- VALUE
+-- 	('bitan', 'quirama', '2232434', 'bitan@sfs.com', '23232', 'active'),
+--     ('juan', 'juan', '2232434', 'juan@sfs.com', '23232', 'active'),
+--     ('lizz', 'lizz', '2232434', 'bitan@sfs.com', '23232', 'active'),
+--     ('eloy', 'eloy', '2232434', 'bitan@sfs.com', '23232', 'active'),
+--     ('sebas', 'sebas', '2232434', 'bitan@sfs.com', '23232', 'active');
+
+-- select * from COURSES;
+-- INSERT INTO COURSES (course_name, teacher_id) 
+-- VALUES 
+-- 	('Tercero B', 2),
+--     ('Primero A', 1),
+--     ('Tercero A', 2),
+--     ('Primero B', 3),
+--     ('Segundo B', 4);
+    
+-- select * from SUBJECTS;
+-- INSERT INTO SUBJECTS (subject_name, teacher_id) 
+-- VALUES 
+-- 	('ciencias del mundo', '2'),
+--     ('Biologia', '1'),
+--     ('Filosofia', '3'),
+--     ('Matematicas', '3'),
+--     ('fisica', '2');
+
+-- select * from PLACES;
+-- INSERT INTO PLACES (place_name, course_id) 
+-- VALUES 
+-- 	('medellin', '1'),
+--     ('medellin', '2'),
+--     ('itagui', '3'),
+--     ('envigado', '3'),
+--     ('laureles', '1');
+
+-- select * from COURSES_SUBJECTS;
+-- INSERT INTO COURSES_SUBJECTS ( course_id, subject_id) VALUES (1,1), (1,2), (1,3), (2,1), (2,2), (2,3);
+
+-- select * from COURSES_TEACHERS;
+-- INSERT INTO COURSES_TEACHERS ( course_id, teacher_id) VALUES (1,1), (2,2), (3,3), (4,4), (1,3);
+
+-- -- ver listado de estudiantes de un curso X
+-- SELECT 
+--     STUDENTS.student_id, 
+--     STUDENTS.student_name, 
+--     STUDENTS.student_last_name, 
+--     STUDENTS.student_document, 
+--     STUDENTS.student_email, 
+--     STUDENTS.student_phone 
+-- FROM 
+--     STUDENTS 
+-- WHERE 
+--     STUDENTS.course_id = 2;
+-- -- ver lista de profes que dictan una materia X
+-- SELECT 
+--     TEACHERS.teacher_id, 
+--     TEACHERS.teacher_name, 
+--     TEACHERS.teacher_last_name, 
+--     TEACHERS.teacher_document, 
+--     TEACHERS.teacher_email, 
+--     TEACHERS.teacher_phone 
+-- FROM 
+--     TEACHERS
+-- JOIN 
+--     COURSES_TEACHERS ON TEACHERS.teacher_id = COURSES_TEACHERS.teacher_id
+-- JOIN 
+--     COURSES_SUBJECTS ON COURSES_TEACHERS.course_id = COURSES_SUBJECTS.course_id
+-- WHERE 
+--     COURSES_SUBJECTS.subject_id = 1;
+
+-- -- ver cantidad de estudiantes por curso
+-- SELECT 
+--     COURSES.course_id, 
+--     COURSES.course_name, 
+--     COUNT(STUDENTS.student_id) as student_count 
+-- FROM 
+--     COURSES 
+-- LEFT JOIN 
+--     STUDENTS ON COURSES.course_id = STUDENTS.course_id 
+-- GROUP BY 
+--     COURSES.course_id, 
+--     COURSES.course_name 
+-- ORDER BY 
+--     student_count DESC;
