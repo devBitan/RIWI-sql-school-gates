@@ -1,0 +1,90 @@
+use noticias_autores;
+
+/*Creación de la colección noticias*/
+db.createCollection("noticias");
+
+/*Creación de la colección autores*/
+db.createCollection("autores");
+
+
+/*Datos de los autores*/
+
+/*Diccionarios para la colección autores*/
+db.autores.insertMany([
+    { _id: 1, nombre: "Santiago", apellido: "Gonzales", email: "santiago.gonzales@gmail.com" },
+    { _id: 2, nombre: "María", apellido: "Cardona", email: "maria.cardona@gmail.com" },
+    { _id: 3, nombre: "Marta", apellido: "Sanchez", email: "marta.sanchez@gmail.com" },
+    { _id: 4, nombre: "Julia", apellido: "Martínez", email: "julia.martinez@gmail.com" },
+    { _id: 5, nombre: "Luis", apellido: "Perez", email: "luis.perez@gmail.com" }
+  ]);
+
+  /*Diccionarios para la colección noticias*/
+  db.noticias.insertMany([
+    { titulo: "Noticia #1", contenido: "Contenido noticia  #1", autor_id: 1, fecha_publicacion: ISODate("2000-11-02") },
+    { titulo: "Noticia #2", contenido: "Contenido noticia #2", autor_id: 2, fecha_publicacion: ISODate("2023-01-05") },
+    { titulo: "Noticia #3", contenido: "Contenido noticia  #3", autor_id: 3, fecha_publicacion: ISODate("2023-01-10") },
+    { titulo: "Noticia #4", contenido: "Contenido noticia  #4", autor_id: 5, fecha_publicacion: ISODate("2024-01-15") },
+    { titulo: "Noticia #5", contenido: "Contenido noticia  #5", autor_id: 2, fecha_publicacion: ISODate("2024-01-25") },
+    { titulo: "Noticia #6", contenido: "Contenido noticia  #6", autor_id: 3, fecha_publicacion: ISODate("2024-01-16") },
+    { titulo: "Noticia #7", contenido: "Contenido noticia  #7", autor_id: 1, fecha_publicacion: ISODate("2024-01-30") },
+    { titulo: "Noticia #8", contenido: "Contenido noticia  #8", autor_id: 2, fecha_publicacion: ISODate("2024-02-08") },
+    { titulo: "Noticia #9", contenido: "Contenido noticia  #9", autor_id: 3, fecha_publicacion: ISODate("2024-02-09") },
+    { titulo: "Noticia #10", contenido: "Contenido noticia #10", autor_id: 1, fecha_publicacion: ISODate("2024-02-14") },
+    { titulo: "Noticia #11", contenido: "Contenido noticia #11", autor_id: 2, fecha_publicacion: ISODate("2024-02-15") },
+    { titulo: "Noticia #12", contenido: "Contenido noticia #12", autor_id: 3, fecha_publicacion: ISODate("2024-02-20") },
+    { titulo: "Noticia #13", contenido: "Contenido noticia #13", autor_id: 4, fecha_publicacion: ISODate("2024-02-25") },
+    { titulo: "Noticia #14", contenido: "Contenido noticia #14", autor_id: 5, fecha_publicacion: ISODate("2024-03-01") },
+    { titulo: "Noticia #15", contenido: "Contenido noticia #15", autor_id: 3, fecha_publicacion: ISODate("2024-03-05") },
+    { titulo: "Noticia #16", contenido: "Contenido noticia #16", autor_id: 1, fecha_publicacion: ISODate("2024-03-10") },
+    { titulo: "Noticia #17", contenido: "Contenido noticia #17", autor_id: 2, fecha_publicacion: ISODate("2024-03-15") },
+    { titulo: "Noticia #18", contenido: "Contenido noticia #18", autor_id: 3, fecha_publicacion: ISODate("2024-03-20") },
+    { titulo: "Noticia #19", contenido: "Contenido noticia #19", autor_id: 4, fecha_publicacion: ISODate("2024-03-25") },
+    { titulo: "Noticia #20", contenido: "Contenido noticia #20", autor_id: 2, fecha_publicacion: ISODate("2024-03-30") }
+  ]);
+  
+
+  /*Obtener el listado de noticias de un autor, en donde el campo de búsqueda o filtro del autor es su email.*/
+db.noticias.aggregate([
+    {
+      $lookup: {
+        from: "autores",
+        localField: "autor_id",
+        foreignField: "_id",
+        as: "autor"
+      }
+    },
+    {
+       $match: { "autor.email": "santiago.gonzales@gmail.com" }
+    },
+  ]);
+  
+  /*Obtener el listado de noticias de un autor, en donde el campo de búsqueda o filtro del autor es su nombre, los resultados deben salir
+  de forma ordenada por el campo fecha de publicación de forma descendente, es decir primero se ven las más recientes.*/
+
+  db.noticias.aggregate([
+    {
+      $lookup: {
+        from: "autores",
+        localField: "autor_id",
+        foreignField: "_id",
+        as: "autor"
+      }
+    },
+    {
+      $match: { "autor.nombre": "Marta", "autor.apellido": "Sanchez" }
+    },
+    {
+      $sort: { fecha_publicacion: -1 }
+    }
+  ]);
+
+  /* Obtener un listado de noticias filtrado por un rango de fechas, por ejemplo todas las noticias entre el 10-01-2024 y el 30-01-2024*/
+
+  db.noticias.find({
+    fecha_publicacion: {
+      $gte: new Date("2024-01-10"),
+      $lte: new Date("2024-01-30")
+    }
+  })
+  
+  
