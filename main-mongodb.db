@@ -1,0 +1,162 @@
+use  school-gates
+
+db.createCollection('students');
+db.createCollection('teachers');
+db.createCollection('courses');
+db.createCollection('subjects');
+db.createCollection('places');
+db.createCollection('courses_subjects');
+db.createCollection('courses_teachers);
+
+db.students.insertMany([
+    {
+        "student_name": "Luis",
+        "student_last_name": "Manila",
+        "student_document": "1036670093",
+        "student_email": "luis@.com",
+        "student_phone": "3059039",
+        "student_active": "active",
+        "course_id": 1
+    },
+    {
+        "student_name": "Juan",
+        "student_last_name": "Quirama",
+        "student_document": "1036670093",
+        "student_email": "jquirama@.com",
+        "student_phone": "3059039",
+        "student_active": "active",
+        "course_id": 2
+    },
+    {
+        "student_name": "Felipe",
+        "student_last_name": "Zapata",
+        "student_document": "1036670093",
+        "student_email": "felipe@.com",
+        "student_phone": "3059039",
+        "student_active": "active",
+        "course_id": 2
+    },
+    {
+        "student_name": "Esteban",
+        "student_last_name": "Lopez",
+        "student_document": "1036670093",
+        "student_email": "esteban@.com",
+        "student_phone": "3059039",
+        "student_active": "active",
+        "course_id": 3
+    },
+    {
+        "student_name": "Alejo",
+        "student_last_name": "Solis",
+        "student_document": "1036670093",
+        "student_email": "alejo@.com",
+        "student_phone": "3059039",
+        "student_active": "active",
+        "course_id": 1
+    }
+]);
+
+
+db.teachers.insertMany([
+    {
+        "teacher_name": "Bitan",
+        "teacher_last_name": "Quirama",
+        "teacher_document": "2232434",
+        "teacher_email": "bitan@sfs.com",
+        "teacher_phone": "23232",
+        "teacher_active": "active"
+    },
+    {
+        "teacher_name": "Juan",
+        "teacher_last_name": "Juan",
+        "teacher_document": "2232434",
+        "teacher_email": "juan@sfs.com",
+        "teacher_phone": "23232",
+        "teacher_active": "active"
+    },
+    {
+        "teacher_name": "Lizz",
+        "teacher_last_name": "Lizz",
+        "teacher_document": "2232434",
+        "teacher_email": "bitan@sfs.com",
+        "teacher_phone": "23232",
+        "teacher_active": "active"
+    },
+    {
+        "teacher_name": "Eloy",
+        "teacher_last_name": "Eloy",
+        "teacher_document": "2232434",
+        "teacher_email": "bitan@sfs.com",
+        "teacher_phone": "23232",
+        "teacher_active": "active"
+    },
+    {
+        "teacher_name": "Sebas",
+        "teacher_last_name": "Sebas",
+        "teacher_document": "2232434",
+        "teacher_email": "bitan@sfs.com",
+        "teacher_phone": "23232",
+        "teacher_active": "active"
+    }
+]);
+
+db.courses.insertMany([
+    {"course_name": "Tercero B", "teacher_id": 2},
+    {"course_name": "Primero A", "teacher_id": 1},
+    {"course_name": "Tercero A", "teacher_id": 2},
+    {"course_name": "Primero B", "teacher_id": 3},
+    {"course_name": "Segundo B", "teacher_id": 4}
+]);
+
+db.subjects.insertMany([
+    {"subject_name": "Ciencias del Mundo", "teacher_id": 2},
+    {"subject_name": "Biología", "teacher_id": 1},
+    {"subject_name": "Filosofía", "teacher_id": 3},
+    {"subject_name": "Matemáticas", "teacher_id": 3},
+    {"subject_name": "Física", "teacher_id": 2}
+]);
+
+db.places.insertMany([
+    {"place_name": "Medellín", "course_id": 1},
+    {"place_name": "Medellín", "course_id": 2},
+    {"place_name": "Itagüí", "course_id": 3},
+    {"place_name": "Envigado", "course_id": 3},
+    {"place_name": "Laureles", "course_id": 1}
+]);
+
+db.courses_subjects.insertOne(
+    {
+        "course_id": 1,
+        "subjects": [
+            {"subject_id": 1},
+            {"subject_id": 2},
+            {"subject_id": 3}
+        ]
+    }
+);
+
+db.courses_teachers.insertOne(
+    {
+        "course_id": 1,
+        "teachers": [
+            {"teacher_id": 1},
+            {"teacher_id": 3}
+        ]
+    }
+);
+
+-Ver listado de estudiantes del curso x
+db.students.find({"course_id": 2});
+
+-ver lista de profes que dictan una materia X
+
+-ver cantidad de estudiantes por curso
+db.students.aggregate([
+    {
+        $group: {
+            _id: "$course_id",
+            student_count: { $sum: 1 }
+        }
+    }
+])
+

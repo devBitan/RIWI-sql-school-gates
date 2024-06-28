@@ -156,3 +156,10 @@
 --     COURSES.course_name 
 -- ORDER BY 
 --     student_count DESC;
+
+
+-- CREDENCIALES
+-- HOST: bvntmtmcxc7cnqvy4tns-mysql.services.clever-cloud.com
+-- DATABASE: bvntmtmcxc7cnqvy4tns
+-- USER: uhsxbd6a8rw2mszz
+-- PASS: n3zcRQM3Uwp2tUlUXQK8
